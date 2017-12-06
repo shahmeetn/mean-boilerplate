@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
+mongoose.Promise = Promise;
 
 /**
  * Database configuration file import
@@ -55,6 +56,13 @@ app.use(express.static(path.join(__dirname, 'public')));
  * Convert request forms data in json
  */
 app.use(bodyParser.json());
+
+/**
+ * Passport middleware to protect routes
+ */
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
 
 /**
  * Express Router for Users URL
