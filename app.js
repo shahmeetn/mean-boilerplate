@@ -1,0 +1,73 @@
+/**
+ * Import node modules to use as a middleware
+ */
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const passport = require('passport');
+const mongoose = require('mongoose');
+
+/**
+ * Database configuration file import
+ */
+const config = require('./config/database');
+
+/**
+ * Mongoose connection
+ */
+mongoose.connect(config.database, {
+    useMongoClient: true
+}, (err) => {
+    if (err) console.log(err);
+});
+
+mongoose.connection.openUri(config.database)
+    .once('open', () => console.log(`connected to database ${config.database}`))
+    .on('error', (error) => console.log(`Database Error`, error));
+
+/**
+ * Initialize express and import routes for express
+ */
+const app = express();
+const users = require('./routes/users');
+
+/**
+ * Backend application port
+ */
+const port = 3000;
+
+/**
+ * Accept requests to express from any domain:port,
+ *  as angular application will be running on different port
+ */
+app.use(cors());
+
+/**
+ * Folder in which frontend files will be located
+ */
+app.use(express.static(path.join(__dirname, 'public')));
+
+/**
+ * Convert request forms data in json
+ */
+app.use(bodyParser.json());
+
+/**
+ * Express Router for Users URL
+ */
+app.use('/users', users);
+
+/**
+ * Express Router for base URL
+ */
+app.get('/', (req, res) => {
+    res.send('invalid Endpoint');
+});
+
+/**
+ * Start application
+ */
+app.listen(port, () => {
+    console.log(`server started on port ${port}`);
+});
