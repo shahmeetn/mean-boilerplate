@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 const config = require('./config/database');
 
 /**
- * Mongoose connection
+ * Connect to mongo via mongoose 
  */
 mongoose.connect(config.database, {
     useMongoClient: true
@@ -22,6 +22,9 @@ mongoose.connect(config.database, {
     if (err) console.log(err);
 });
 
+/**
+ * Test mongoose connection
+ */
 mongoose.connection.openUri(config.database)
     .once('open', () => console.log(`connected to database ${config.database}`))
     .on('error', (error) => console.log(`Database Error`, error));
