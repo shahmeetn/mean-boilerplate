@@ -1,3 +1,46 @@
-<p>
-  register works!
-</p>
+<h2 class="page-header">
+  Register
+</h2>
+<form novalidate (ngSubmit)="onRegisterSubmit(f)" #f="ngForm">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" name="name" class="form-control" [(ngModel)]="name" #uName="ngModel" minlength="5" required>
+    <div class="alert alert-danger" *ngIf="uName.errors?.required && uName.touched">
+      Name is required.
+    </div>
+    <div class="alert alert-danger" *ngIf="uName.errors?.minlength && uName.touched">
+      Name should be at least 5 characters long.
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="userName">User Name</label>
+    <input type="text" name="userName" class="form-control" [(ngModel)]="userName" #uUserName="ngModel" minlength="5" required>
+    <div class="alert alert-danger" *ngIf="uUserName.errors?.required && uUserName.touched">
+      User Name is required.
+    </div>
+    <div class="alert alert-danger" *ngIf="uUserName.errors?.minlength && uUserName.touched">
+      User Name should be at least 5 characters long.
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" name="email" class="form-control" [(ngModel)]="email" #uEmail="ngModel" minlength="5" required>
+    <div class="alert alert-danger" *ngIf="uEmail.errors?.required && uEmail.touched">
+      Email is required.
+    </div>
+    <div class="alert alert-danger" *ngIf="uEmail.errors?.minlength && uEmail.touched">
+      Email is invalid.
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" name="password" class="form-control" [(ngModel)]="password" #uPassword="ngModel" minlength="8" required>
+    <div class="alert alert-danger" *ngIf="uPassword.errors?.required && uPassword.touched">
+      Password is required.
+    </div>
+    <div class="alert alert-danger" *ngIf="uPassword.errors?.minlength && uPassword.touched">
+      User Name should be at least 8 characters long.
+    </div>
+  </div>
+  <input type="submit" value="Register" class="btn btn-primary">
+</form>
